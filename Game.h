@@ -6,8 +6,18 @@ enum GameState
 	GAME_1 = 1,
 };
 
-class Game
+static class Game
 {
+public:
+	Game();
 
+	~Game();
+
+	GameState getGameState();
+
+private:
+
+	GameState currentGameState;
 };
+
 
