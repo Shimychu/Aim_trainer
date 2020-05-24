@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string>
 
+int global_counter = 0;
 
 //Screen dimension constants
 int SCREEN_WIDTH;
@@ -101,6 +102,9 @@ public:
 
 	//Shows the dot on the screen
 	void render();
+
+	int getmPosX();
+	int getmPosY();
 
 private:
 	//The X and Y offsets of the dot
@@ -248,6 +252,21 @@ Dot::Dot()
 
 void Dot::handleEvent(SDL_Event& e)
 {
+	if (e.type == SDL_MOUSEMOTION) {
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+		//printf("Mouse x: %d\nMouse y: %d\n", x, y);
+
+		//If mouse is within X coord of dot
+		if (x < mPosX + (DOT_WIDTH / 2) && x > mPosX - (DOT_WIDTH / 2))
+		{
+			//If mouse is within Y coord of dot
+			if (y  < mPosY + (DOT_HEIGHT / 2) && y  > mPosY - (DOT_HEIGHT / 2 ))
+			{
+				printf("ding: %d\n", global_counter++);
+			}
+		}
+	}
 	//If a key was pressed
 	if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 	{
@@ -318,6 +337,15 @@ void Dot::handleEvent(SDL_Event& e)
 			break;
 		}
 	}
+}
+
+int Dot::getmPosX() {
+	return mPosX;
+}
+
+int Dot::getmPosY() 
+{
+	return mPosY;
 }
 
 void Dot::move()
