@@ -12,20 +12,23 @@ public:
 
 	static const int DOT_VEL = 10;
 
-	Dot();
+	Dot(int width, int height);
 
-	void handleEvent(SDL_Event& e);
+	//void handleEvent(SDL_Event& e);
 
-	void move();
+	//void move();
 
-	void render();
+	int getPosX();
 
+	int getPosY();
 private:
 
 	// The position of the dot
-	int posX, posY;
+	int posX;
+	int posY;
 
 	// The velocity of the dot
-	int velX, velY;
+	int velX;
+	int velY;
 };
 

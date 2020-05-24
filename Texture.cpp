@@ -22,24 +22,19 @@ Texture::~Texture()
 	free();
 }
 
-SDL_Texture* Texture::LoadImage(std::string path)
+
+void Texture::render(int x, int y, SDL_Renderer* gRenderer, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
-	free();
 
-	SDL_Texture* newTexture = NULL;
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = { x , y, mWidth, mHeight };
 
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == NULL)
-	{
-		printf("Error unable to load images: %s\n", IMG_GetError());
-		exit(2);
+	//Clip rendering dimensions
+	if( clip != NULL ){
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
 	}
 
-	mWidth = loadedSurface->w;
-	mHeight = loadedSurface->h;
+	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 
-	SDL_FreeSurface(loadedSurface);
-
-	mTexture = newTexture;
-	return mTexture;
 }
