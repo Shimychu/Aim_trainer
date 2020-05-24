@@ -254,10 +254,44 @@ void Dot::handleEvent(SDL_Event& e)
 		//Adjust the velocity
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP: mVelY -= DOT_VEL; break;
-		case SDLK_DOWN: mVelY += DOT_VEL; break;
-		case SDLK_LEFT: mVelX -= DOT_VEL; break;
-		case SDLK_RIGHT: mVelX += DOT_VEL; break;
+			case SDLK_UP: 
+				if (mVelX > 0) {
+					if (mVelX > 20 || mVelX < -20) {
+						//do nothing
+					}
+					else {
+						mVelX++;
+					}
+				}
+				else {
+					if (mVelX > 20 || mVelX < -20) {
+						//do nothing
+					}
+					else {
+						mVelX--;
+					}
+				}
+				printf("mVelX: %d\n", mVelX);
+				break;
+			case SDLK_DOWN: 
+					if (mVelX > 1) {
+						if (mVelX > 1 || mVelX < -1) {
+							//do nothing
+						}
+						else {
+							mVelX--;
+						}
+					}
+					else {
+						if (mVelX > 1 || mVelX < -1) {
+							//do nothing
+						}
+						else {
+							mVelX++;
+						}
+					}
+				printf("mVelX: %d\n", mVelX);
+				break;
 		}
 	}
 	//If a key was released
@@ -266,10 +300,22 @@ void Dot::handleEvent(SDL_Event& e)
 		//Adjust the velocity
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP: mVelY += DOT_VEL; break;
-		case SDLK_DOWN: mVelY -= DOT_VEL; break;
-		case SDLK_LEFT: mVelX += DOT_VEL; break;
-		case SDLK_RIGHT: mVelX -= DOT_VEL; break;
+		case SDLK_UP:
+			if (mVelX > 20) {
+				//do nothing
+			}
+			else {
+				mVelX++;
+			}
+			break;
+		case SDLK_DOWN:
+			if (mVelX < 1) {
+				break;
+			}
+			else {
+				mVelX--;
+			}
+			break;
 		}
 	}
 }
@@ -446,7 +492,7 @@ int main(int argc, char* args[])
 					}
 
 					//Handle input for the dot
-					//dot.handleEvent(e);
+					dot.handleEvent(e);
 				}
 
 				//Move the dot
