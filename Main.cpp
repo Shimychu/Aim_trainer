@@ -1,7 +1,8 @@
 #include <SDL.h>
 #include <stdio.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "Texture.h"
-#include "Game.h"
 
 
 //Window we'll be rendering
@@ -16,10 +17,11 @@ SDL_Renderer* gRenderer = NULL;
 //Current display texture
 SDL_Texture* gTexture = NULL;
 
-Game* game = NULL;
 
 double SCREEN_WIDTH;
 double SCREEN_HEIGHT;
+
+
 
 void close() {
 	//Free loaded image
@@ -110,22 +112,24 @@ SDL_Texture* loadTexture(std::string path)
 
 void LoadMedia()
 {
-	gTexture = loadTexture("Img/PLAY.png");
-	if (gTexture == NULL) {
-		printf("Failed to load png image.\n");
-		close();
-	}
+	//gTexture = loadTexture("Img/PLAY.png");
+	//if (gTexture == NULL) {
+	//	printf("Failed to load png image.\n");
+	//	close();
+	//}
+
+
+	
 }
 
 
 void screenSetUp()
 {
-
+	
 }
 
 
 int main(int argc, char* args[]) {
-	game = new Game();
 	initScreen();
 	LoadMedia();
 
@@ -142,26 +146,25 @@ int main(int argc, char* args[]) {
 			}
 		}
 
-		if (game->getGameState() == 0) {
-			//Clear screen
-			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(gRenderer);
 
-			//Top left corner viewport
-			SDL_Rect topLeftViewport;
-			topLeftViewport.x = 0;
-			topLeftViewport.y = 0;
-			topLeftViewport.w = SCREEN_WIDTH / 2;
-			topLeftViewport.h = SCREEN_HEIGHT / 2;
-			SDL_RenderSetViewport(gRenderer, &topLeftViewport);
+		//Clear screen
+		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(gRenderer);
 
-			//Render texture to screen
-			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-		} 
+		//Top left corner viewport
+		SDL_Rect topLeftViewport;
+		topLeftViewport.x = 0;
+		topLeftViewport.y = 0;
+		topLeftViewport.w = SCREEN_WIDTH / 2;
+		topLeftViewport.h = SCREEN_HEIGHT / 2;
+		SDL_RenderSetViewport(gRenderer, &topLeftViewport);
+
+		//Render texture to screen
+		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
 		//Update screen
 		SDL_RenderPresent(gRenderer);
-	}
 
-	return 0;
+		return 0;
+	}
 }

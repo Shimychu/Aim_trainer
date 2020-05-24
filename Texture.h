@@ -3,6 +3,7 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdio.h>
 
 class Texture 
 {
@@ -16,7 +17,7 @@ public:
 	SDL_Texture* LoadImage(std::string path);
 
 	//Deallocate Texture();
-	//void free();
+	void free();
 
 	//Render Texture at given location
 	void render(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);

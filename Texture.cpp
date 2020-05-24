@@ -7,14 +7,24 @@ Texture::Texture()
 	mHeight = 0;
 }
 
+void Texture::free() {
+	if (mTexture != NULL) 
+	{
+		SDL_DestroyTexture(mTexture);
+		mTexture = NULL;
+		mWidth = 0;
+		mHeight = 0;
+	}
+}
+
 Texture::~Texture() 
 {	
-	//
+	free();
 }
 
 SDL_Texture* Texture::LoadImage(std::string path)
 {
-	//free();
+	free();
 
 	SDL_Texture* newTexture = NULL;
 
