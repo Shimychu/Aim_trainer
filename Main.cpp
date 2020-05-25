@@ -109,12 +109,18 @@ public:
 	int getmPosX();
 	int getmPosY();
 
+	bool isHovered();
+	void setHoveredTrue();
+	void setHoveredFalse();
+
 private:
 	//The X and Y offsets of the dot
 	int mPosX, mPosY;
 
 	//The velocity of the dot
 	int mVelX, mVelY;
+
+	bool hovered;
 };
 
 //Starts up SDL and creates window
@@ -288,8 +294,10 @@ Dot::Dot()
 	mPosY = (SCREEN_HEIGHT - 24) / 2;
 
 	//Initialize the velocity
-	mVelX = 10;
+	mVelX = 5;
 	mVelY = 0;
+
+	hovered = false;
 }
 
 void Dot::handleEvent(SDL_Event& e)
@@ -300,13 +308,19 @@ void Dot::handleEvent(SDL_Event& e)
 		//printf("Mouse x: %d\nMouse y: %d\n", x, y);
 
 		//If mouse is within X coord of dot
-		if (x < mPosX + (DOT_WIDTH / 2) && x > mPosX - (DOT_WIDTH / 2))
+		if (x < mPosX + (DOT_WIDTH) && x > mPosX)
 		{
 			//If mouse is within Y coord of dot
-			if (y  < mPosY + (DOT_HEIGHT / 2) && y  > mPosY - (DOT_HEIGHT / 2 ))
+			if (y  < mPosY + DOT_HEIGHT && y  > mPosY)
 			{
-				printf("ding: %d\n", global_counter++);
+				setHoveredTrue();
 			}
+			else {
+				setHoveredFalse();
+			}
+		}
+		else {
+			setHoveredFalse();
 		}
 	}
 	//If a key was pressed
@@ -410,6 +424,21 @@ int Dot::getmPosY()
 	return mPosY;
 }
 
+void Dot::setHoveredTrue() 
+{
+	hovered = true;
+}
+
+void Dot::setHoveredFalse()
+{
+	hovered = false;
+}
+
+bool Dot::isHovered()
+{
+	return hovered;
+}
+
 void Dot::move()
 {
 	//Move the dot left or right
@@ -436,6 +465,12 @@ void Dot::move()
 void Dot::render()
 {
 	//Show the dot
+	if (isHovered()) {
+		gDotTexture.loadFromFile("Img/dot_red.bmp");
+	}
+	else {
+		gDotTexture.loadFromFile("Img/dot.bmp");
+	}
 	gDotTexture.render(mPosX, mPosY);
 }
 
