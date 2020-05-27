@@ -113,6 +113,9 @@ public:
 	void setHoveredTrue();
 	void setHoveredFalse();
 
+	void toggleStart();
+	bool isOn();
+
 private:
 	//The X and Y offsets of the dot
 	int mPosX, mPosY;
@@ -121,6 +124,7 @@ private:
 	int mVelX, mVelY;
 
 	bool hovered;
+	bool start;
 };
 
 //Starts up SDL and creates window
@@ -298,6 +302,21 @@ Dot::Dot()
 	mVelY = 0;
 
 	hovered = false;
+	start = false;
+}
+
+void Dot::toggleStart()
+{
+	if (start == false) {
+		start = true;
+	}
+	else {
+		start = false;
+	}
+}
+
+bool Dot::isOn() {
+	return start;
 }
 
 void Dot::handleEvent(SDL_Event& e)
@@ -367,6 +386,9 @@ void Dot::handleEvent(SDL_Event& e)
 					}
 				printf("mVelX: %d\n", mVelX);
 				break;
+			case SDLK_SPACE:
+				toggleStart();
+				break;
 		}
 	}
 	//If a key was released
@@ -411,6 +433,7 @@ void Dot::handleEvent(SDL_Event& e)
 				}
 			}
 			break;
+
 		}
 	}
 }
@@ -441,6 +464,8 @@ bool Dot::isHovered()
 
 void Dot::move()
 {
+	if (!isOn())
+		return;
 	//Move the dot left or right
 	mPosX += mVelX;
 
